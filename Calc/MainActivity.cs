@@ -15,7 +15,6 @@ namespace Calc
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
-            System.Console.WriteLine("Hello Bitch");
         }
     }
 }
