@@ -8,7 +8,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvAd"
         android:gravity="end"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:ellipsize="none" />
     <TextView
         android:text="0"
         android:layout_width="match_parent"
@@ -17,7 +19,8 @@
         android:textSize="50dp"
         android:gravity="end"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="15dp" />
+        android:layout_marginBottom="15dp"
+        android:singleLine="false" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

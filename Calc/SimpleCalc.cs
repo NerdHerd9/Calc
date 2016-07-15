@@ -14,64 +14,71 @@ namespace Calc
     [Activity(Label = "SimpleCalc")]
     public class SimpleCalc : Activity
     {
-        double a;
-        TextView tv, tvAd;
-        int count = 1;
-        int n = 0;
-        bool t = false;
-        bool r = false;
+        float a;                                       //value to count
+        TextView tv, tvAd;                              //tv - main line (TextView). tvAd - Aditional line
+        int count = 1;                                  //to avoid typing more than 12 symbols
+        int n = 0;                                      //number of operation to do
+        bool t = false;                                 //to clean in right way and time main line
+        bool r = false;                                 //to clean aditional line
+        string s;
 
+        //for multiple operations
         void swith()
         {
-            tvAd.Text = tvAd.Text + tv.Text;
+            tvAd.Text = tvAd.Text + tv.Text;           //Adding to the aditional line
+            //string s;
             switch (n)
             {
                 case 0:
-                    a = System.Convert.ToDouble(tv.Text);
+                    a = System.Convert.ToSingle(tv.Text);           //in case of the first oparetion (not multiple)
                     break;
                 case 1:
-                    a = a + System.Convert.ToDouble(tv.Text);
+                    a = a + System.Convert.ToSingle(tv.Text);       //in case of "+" operation   
                     tv.Text = a.ToString();
                     break;
                 case 2:
-                    a = a - System.Convert.ToDouble(tv.Text);
+                    a = a - System.Convert.ToSingle(tv.Text);       //in case of "-" operation
                     tv.Text = a.ToString();
                     break;
                 case 3:
-                    a = a * System.Convert.ToDouble(tv.Text);
+                    a = a * System.Convert.ToSingle(tv.Text);       //in case of "*" operation
+                    //s = Math.Round(a).ToString();
+                    //tv.Text = Math.Round(a, 12 - s.Length).ToString();
                     tv.Text = a.ToString();
                     break;
                 case 4:
-                    if (System.Convert.ToDecimal(tv.Text) != 0)
+                    if (System.Convert.ToDecimal(tv.Text) != 0)     //in case of "/" operation
                     {
-                        a = a / System.Convert.ToDouble(tv.Text);
-                        string s = Math.Round(a).ToString();
-                        tv.Text = Math.Round(a, 12 - s.Length).ToString();
+                        a = a / System.Convert.ToSingle(tv.Text);
+                        s = Math.Round(a).ToString();    
+                        tv.Text = Math.Round(a, 12 - s.Length).ToString();  //rounding the result
                     }
                     else
                     {
-                        tv.Text = "error";
+                        tv.Text = "error";                          // can't divide by 0
                         count = 0;
-                        t = true;
+                        t = true;                                   //to clean main line with next symbol
                     }
                     break;
             }
         }
 
-
+        //what we do when some operation is selected (u - number of operation)
         void operation(int u)
         {
-            if (t == true)
+            if (tv.Text.Length != 0)
             {
-                n = u;
-                a = System.Convert.ToDouble(tv.Text);
-              //  if (r == true
-            }
-            else if (tv.Text.Length != 0)
-            {
-                swith();
+                if (r != true)
+                    swith();
+                else
+                {
+                    tvAd.Text = string.Empty;
+                    tvAd.Text = tvAd.Text + tv.Text;
+                    r = false;
+                }
                 t = true;
                 n = u;
+                a = System.Convert.ToSingle(tv.Text);
                 switch (n)
                 {
                     case 1:
@@ -88,20 +95,23 @@ namespace Calc
                         break;
                 }
             }
+            else if (u==2)
+                tv.Text = "-";
         }
 
+        //When some number is typed (u - number)
         void num(int u)
         {
-            if (t == true)
+            if (t == true)                          //have to clean main line if it is nessesary (t == true)
             {
                 tv.Text = string.Empty;
                 count = 0;
                 t = false;
             }
 
-            if (tv.Text == "0")
+            if (tv.Text == "0")                     //if main line is just "0" replace it
                 tv.Text = u.ToString();
-            else if (count != 12)
+            else if (count != 12)                   //don't allow user to type more than 12 symbols
             {
                 tv.Text = tv.Text + u.ToString();
                 count++;
@@ -113,6 +123,7 @@ namespace Calc
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.SimpleCalc);
 
+            //Adding designers objects to code
             tv = FindViewById<TextView>(Resource.Id.tv);
             tvAd = FindViewById<TextView>(Resource.Id.tvAd);
             Button CE = FindViewById<Button>(Resource.Id.CE);
@@ -135,6 +146,7 @@ namespace Calc
             Button b9 = FindViewById<Button>(Resource.Id.b9);
             Button b0 = FindViewById<Button>(Resource.Id.b0);
 
+            //connecting actions of clicking to numbers with special func
             b1.Click += (object sender, EventArgs e) => num(1);
             b2.Click += (object sender, EventArgs e) => num(2);
             b3.Click += (object sender, EventArgs e) => num(3);
@@ -159,6 +171,7 @@ namespace Calc
                 }
             };
 
+            //Button "C" clicked
             C.Click += (object sender, EventArgs e) =>
             {
                 n = 0;
@@ -167,6 +180,7 @@ namespace Calc
                 count = 0;
             };
 
+            //Button backspace "<-" clicked
             back.Click += (object sender, EventArgs e) =>
             {
                 if (count != 0)
@@ -176,6 +190,7 @@ namespace Calc
                 }
             };
 
+            //Button "," clicked
             dot.Click += (object sender, EventArgs e) =>
             {
                 if (tv.Text == "")
@@ -190,18 +205,21 @@ namespace Calc
                 }
             };
 
+            //Button "CE" clicked
             CE.Click += (object sender, EventArgs e) =>
             {
                 tv.Text = string.Empty;
                 count = 0;
             };
 
-            /* n
+            /* n - operation
+             * 0 - none operation
              * 1 - "+"
              * 2 - "-"
              * 3 - "*"
              * 4 - "/"
              */
+             // Buttons of operations clicked
             plus.Click += (object sender, EventArgs e) => operation(1);
             minus.Click += (object sender, EventArgs e) => operation(2);
             x.Click += (object sender, EventArgs e) => operation(3);
