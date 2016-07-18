@@ -15,14 +15,31 @@ namespace Calc
     public class SimpleCalc : Activity
     {
         TextView tv, tvAd;                              //tv - main line (TextView). tvAd - Aditional line
-        int count = 0;
-        string a, b;                                    // b - typing new number, a - is the first member of operation
+        string a;                                    // b - typing new number, a - is the first member of operation
+        string b;
+        float[] number = new float[0];
 
         void num(int u)
         {
-            tvAd.Text = tvAd.Text + u.ToString();
-            tv.Text = u.ToString();
-            count++;
+            if (b.Length < 20)
+            {
+                b = b + u.ToString();
+                re();
+            }
+        }
+
+        void operation(string u)
+        {
+            tvAd.Text = tvAd.Text + u;
+            a = tvAd.Text;
+            Array.Resize<float>(ref number, number.Length + 1);
+            number[number.Length - 1] = float.Parse(b);
+            b = string.Empty;
+        }
+
+        void re()
+        {
+            tvAd.Text = a + b;
         }
 
         protected override void OnCreate(Bundle bundle)
@@ -30,6 +47,7 @@ namespace Calc
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.SimpleCalc);
 
+            a = b = "";
             //Adding designers objects to code
             tv = FindViewById<TextView>(Resource.Id.tv);
             tvAd = FindViewById<TextView>(Resource.Id.tvAd);
@@ -69,49 +87,48 @@ namespace Calc
             b9.Click += (object sender, EventArgs e) => num(9);
             b0.Click += (object sender, EventArgs e) =>
             {
-                
+                num(0);   
             };
        
             //Button "C" clicked
             C.Click += (object sender, EventArgs e) =>
             {
-                tvAd.Text = string.Empty;
-                tv.Text = string.Empty;
-                count = 0;   
+                a = b = string.Empty;
+                re();
+                tv.Text = string.Empty;   
             };
         
             //Button backspace "<-" clicked
             back.Click += (object sender, EventArgs e) =>
             {
-                if (count != 0)
+                if (b.Length != 0)
+                    b = b.Remove(b.Length - 1);
+                else
                 {
-                    tvAd.Text = tvAd.Text.Remove(count - 1);
-                    count--;
-                }
+                    b = number[number.Length - 1].ToString();
+                    a = a.Remove(a.Length - b.Length-1);
+                    Array.Resize<float>(ref number, number.Length - 1);
+                }  
+                if (tvAd.Text.Length != 0)
+                    tvAd.Text = tvAd.Text.Remove(tvAd.Text.Length - 1);
             };
 
             //Button "," clicked
             dot.Click += (object sender, EventArgs e) =>
             {
-                if (a.Length == 0)
-                {
+                if (b.Length == 0)
                     b = "0,";
-                    tvAd.Text = a + b;
-                    count = count+2;
-                }
-                else if (a.Text.Contains(",") == false)
-                {
+                else if (b.Contains(",") == false)
                     b = b + ",";
-                    tv.Text = a + b;
-                    count++;
-                }
+
+                re();
             };
 
             //Button "CE" clicked
             CE.Click += (object sender, EventArgs e) =>
             {
-                tv.Text = string.Empty;
-                count = 0;
+                b = string.Empty;
+                re();
             };
 
             /* n - operation
@@ -122,11 +139,11 @@ namespace Calc
              * 4 - "/"
              */
              // Buttons of operations clicked
-           /* plus.Click += (object sender, EventArgs e) => operation(1);
-            minus.Click += (object sender, EventArgs e) => operation(2);
-            x.Click += (object sender, EventArgs e) => operation(3);
-            slash.Click += (object sender, EventArgs e) => operation(4);
-            equal.Click += (object sender, EventArgs e) =>
+            plus.Click += (object sender, EventArgs e) => operation("+");
+            minus.Click += (object sender, EventArgs e) => operation("-");
+            x.Click += (object sender, EventArgs e) => operation("*");
+            slash.Click += (object sender, EventArgs e) => operation("/");
+            /*equal.Click += (object sender, EventArgs e) =>
             {
                 swith();
                 tvAd.Text = tvAd.Text + " = ";
