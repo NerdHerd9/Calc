@@ -8,28 +8,31 @@
         android:layout_height="wrap_content"
         android:textSize="25dp"
         android:text="Enter your number:" />
+    <TextView
+         android:id="@+id/plusI"
+         android:layout_below="@id/Head"
+         android:layout_centerHorizontal="true"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="+i"
+         android:textSize="50dp" />
     <EditText
         android:id="@+id/aEditText"
         android:layout_below="@id/Head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/plusI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textSize="25dp"
         android:inputType="number|numberSigned|numberDecimal"
         android:text="0" />
-    <TextView
-        android:id="@+id/plusI"
-        android:layout_below="@id/Head"
-        android:layout_toRightOf="@id/aEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+i"
-        android:textSize="50dp" />
+    
     <EditText
         android:id="@+id/bEditText"
         android:layout_below="@id/Head"
         android:layout_toRightOf="@id/plusI"
-        android:layout_width="wrap_content"
+        android:layout_alignParentRight="@id/Head"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="25dp"
         android:inputType="number|numberSigned|numberDecimal"
