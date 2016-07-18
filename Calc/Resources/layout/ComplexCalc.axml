@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:textSize="25dp"
-        android:inputType="number"
+        android:inputType="numberSigned"
         android:text="0" />
     <TextView
         android:id="@+id/plusI"
@@ -23,7 +23,7 @@
         android:layout_toRightOf="@id/aEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+i*"
+        android:text="+i"
         android:textSize="50dp" />
     <EditText
         android:id="@+id/bEditText"
@@ -32,6 +32,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25dp"
-        android:inputType="number"
+        android:inputType="number|numberSigned|numberDecimal"
         android:text="0" />
 </RelativeLayout>
