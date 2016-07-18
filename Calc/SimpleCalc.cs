@@ -14,12 +14,13 @@ namespace Calc
     [Activity(Label = "SimpleCalc")]
     public class SimpleCalc : Activity
     {
-        float a;                                       //value to count
+    /*    float a;                                       //value to count
         TextView tv, tvAd;                              //tv - main line (TextView). tvAd - Aditional line
         int count = 1;                                  //to avoid typing more than 12 symbols
         int n = 0;                                      //number of operation to do
         bool t = false;                                 //to clean in right way and time main line
         bool r = false;                                 //to clean aditional line
+        bool sysMes = false;
         string s;
 
         //for multiple operations
@@ -42,9 +43,16 @@ namespace Calc
                     break;
                 case 3:
                     a = a * System.Convert.ToSingle(tv.Text);       //in case of "*" operation
-                    //s = Math.Round(a).ToString();
-                    //tv.Text = Math.Round(a, 12 - s.Length).ToString();
-                    tv.Text = a.ToString();
+                    if (a.ToString()=="бесконечность")
+                    {
+                        //tvAd.Text = string.Empty;
+                       // sysMes = true;
+                        t = true;
+                        tv.Text = "Too much";
+                        count = 0;
+                    }
+                    else
+                        tv.Text = a.ToString();
                     break;
                 case 4:
                     if (System.Convert.ToDecimal(tv.Text) != 0)     //in case of "/" operation
@@ -57,7 +65,8 @@ namespace Calc
                     {
                         tv.Text = "error";                          // can't divide by 0
                         count = 0;
-                        t = true;                                   //to clean main line with next symbol
+                       // sysMes = true;
+                        t = true;                                   //to clean main line with next symbol                    
                     }
                     break;
             }
@@ -66,7 +75,16 @@ namespace Calc
         //what we do when some operation is selected (u - number of operation)
         void operation(int u)
         {
-            if (tv.Text.Length != 0)
+            /*if (sysMes==true)
+            {
+                tv.Text = string.Empty;
+                tvAd.Text = string.Empty;
+                tvAd.Text = tvAd.Text + tv.Text;
+                r = false;
+                sysMes = false;
+            }
+            
+            if (tv.Text != "" && tv.Text!="-")
             {
                 if (r != true)
                     swith();
@@ -117,15 +135,15 @@ namespace Calc
                 count++;
             }
         }
-
+*/
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.SimpleCalc);
 
             //Adding designers objects to code
-            tv = FindViewById<TextView>(Resource.Id.tv);
-            tvAd = FindViewById<TextView>(Resource.Id.tvAd);
+            //tv = FindViewById<TextView>(Resource.Id.tv);
+            //tvAd = FindViewById<TextView>(Resource.Id.tvAd);
             Button CE = FindViewById<Button>(Resource.Id.CE);
             Button C = FindViewById<Button>(Resource.Id.C);
             Button back = FindViewById<Button>(Resource.Id.back);
@@ -145,7 +163,7 @@ namespace Calc
             Button b8 = FindViewById<Button>(Resource.Id.b8);
             Button b9 = FindViewById<Button>(Resource.Id.b9);
             Button b0 = FindViewById<Button>(Resource.Id.b0);
-
+/*
             //connecting actions of clicking to numbers with special func
             b1.Click += (object sender, EventArgs e) => num(1);
             b2.Click += (object sender, EventArgs e) => num(2);
@@ -220,7 +238,7 @@ namespace Calc
              * 4 - "/"
              */
              // Buttons of operations clicked
-            plus.Click += (object sender, EventArgs e) => operation(1);
+           /* plus.Click += (object sender, EventArgs e) => operation(1);
             minus.Click += (object sender, EventArgs e) => operation(2);
             x.Click += (object sender, EventArgs e) => operation(3);
             slash.Click += (object sender, EventArgs e) => operation(4);
@@ -231,7 +249,7 @@ namespace Calc
                 t = true;
                 r = true;
                 n = 0;
-            };
+            };*/
         }
     }
 }
