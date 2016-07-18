@@ -99,23 +99,17 @@ namespace Calc
 			// aapt resource value: 0x7f05000a
 			public const int back = 2131034122;
 			
-			// aapt resource value: 0x7f050003
-			public const int button1 = 2131034115;
-			
-			// aapt resource value: 0x7f050004
-			public const int button2 = 2131034116;
-			
-			// aapt resource value: 0x7f050005
-			public const int button3 = 2131034117;
-			
-			// aapt resource value: 0x7f050006
-			public const int button4 = 2131034118;
-			
 			// aapt resource value: 0x7f05001d
 			public const int dot = 2131034141;
 			
 			// aapt resource value: 0x7f05001e
 			public const int equal = 2131034142;
+			
+			// aapt resource value: 0x7f050003
+			public const int kurL = 2131034115;
+			
+			// aapt resource value: 0x7f050004
+			public const int kurR = 2131034116;
 			
 			// aapt resource value: 0x7f050007
 			public const int linearLayout2 = 2131034119;
@@ -141,8 +135,14 @@ namespace Calc
 			// aapt resource value: 0x7f05001a
 			public const int plus = 2131034138;
 			
+			// aapt resource value: 0x7f050005
+			public const int root = 2131034117;
+			
 			// aapt resource value: 0x7f05000b
 			public const int slash = 2131034123;
+			
+			// aapt resource value: 0x7f050006
+			public const int square = 2131034118;
 			
 			// aapt resource value: 0x7f050001
 			public const int tv = 2131034113;

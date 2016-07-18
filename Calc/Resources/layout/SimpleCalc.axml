@@ -51,7 +51,7 @@
             android:text="x^2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/"
+            android:id="@+id/square"
             android:textSize="20dp" />
     </LinearLayout>
     <LinearLayout
