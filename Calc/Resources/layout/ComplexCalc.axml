@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/Head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:text="Enter your number:" />
+    <EditText
+        android:id="@+id/aEditText"
+        android:layout_below="@id/Head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:textSize="25dp"
+        android:inputType="number"
+        android:text="0" />
+    <TextView
+        android:id="@+id/plusI"
+        android:layout_below="@id/Head"
+        android:layout_toRightOf="@id/aEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+i*"
+        android:textSize="50dp" />
+    <EditText
+        android:id="@+id/bEditText"
+        android:layout_below="@id/Head"
+        android:layout_toRightOf="@id/plusI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:inputType="number"
+        android:text="0" />
+</RelativeLayout>
