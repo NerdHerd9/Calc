@@ -15,28 +15,60 @@ namespace Calc
     public class SimpleCalc : Activity
     {
         TextView tv, tvAd;                              //tv - main line (TextView). tvAd - Aditional line
-        string a;                                    // b - typing new number, a - is the first member of operation
-        string b;
-        float[] number = new float[0];
+        string a;                                       //a - is the first member of operation
+        string b;                                       // b - typing new number
+        float[] number = new float[0];                  // massive to archive all numbers to operate
+        string oper;
 
-        void num(int u)
+        //any number is typed
+        void num(int u)          
         {
-            if (b.Length < 20)
+            if (tvAd.Text.EndsWith("^2") == false)
             {
-                b = b + u.ToString();
-                re();
+                if (b.Length < 20)
+                {
+                    b = b + u.ToString();
+                    re();
+                }
             }
         }
 
-        void operation(string u)
+        //help func for making new member in NumberArray and cleaning b
+        void noper()
         {
-            tvAd.Text = tvAd.Text + u;
-            a = tvAd.Text;
             Array.Resize<float>(ref number, number.Length + 1);
             number[number.Length - 1] = float.Parse(b);
             b = string.Empty;
         }
 
+        //any operation button is typed
+        void operation(string u)
+        {
+            if (tvAd.Text.Length == 0)
+            {
+                tvAd.Text = "0" + u;
+                Array.Resize<float>(ref number, number.Length + 1);
+                number[number.Length - 1] = 0;
+            }
+            else
+            {
+                if (b.Length == 0)
+                {
+                    if (tvAd.Text.EndsWith("^2") == false)
+                    {
+                        oper = oper.Remove(oper.Length - 1);
+                        tvAd.Text = tvAd.Text.Remove(a.Length - 1);
+                    }
+                }
+                else
+                    noper();
+                tvAd.Text = tvAd.Text + u;
+            }
+            a = tvAd.Text;
+            oper = oper + u;
+        }
+
+        //recalc value of aditional line
         void re()
         {
             tvAd.Text = a + b;
@@ -47,7 +79,8 @@ namespace Calc
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.SimpleCalc);
 
-            a = b = "";
+            a = b = oper = "";
+
             //Adding designers objects to code
             tv = FindViewById<TextView>(Resource.Id.tv);
             tvAd = FindViewById<TextView>(Resource.Id.tvAd);
@@ -101,27 +134,40 @@ namespace Calc
             //Button backspace "<-" clicked
             back.Click += (object sender, EventArgs e) =>
             {
-                if (b.Length != 0)
-                    b = b.Remove(b.Length - 1);
-                else
-                {
-                    b = number[number.Length - 1].ToString();
-                    a = a.Remove(a.Length - b.Length-1);
-                    Array.Resize<float>(ref number, number.Length - 1);
-                }  
-                if (tvAd.Text.Length != 0)
-                    tvAd.Text = tvAd.Text.Remove(tvAd.Text.Length - 1);
+              //  if (tvAd.Text.EndsWith("^2"))
+              //  {
+              //     a = a.Remove(a.Length - b.Length - 4);
+              //      re();
+              //  }
+              //  else
+              //  {
+                    if (b.Length != 0)
+                    {
+                        b = b.Remove(b.Length - 1);
+                        tvAd.Text = tvAd.Text.Remove(tvAd.Text.Length - 1);
+                    }
+                    else if (number.Length != 0)
+                    {
+                        b = number[number.Length - 1].ToString();
+                        Array.Resize<float>(ref number, number.Length - 1);
+                        a = a.Remove(a.Length - b.Length - 1);
+                        tvAd.Text = tvAd.Text.Remove(tvAd.Text.Length - 1);
+                        oper = oper.Remove(oper.Length - 1);
+                    }
+               // }
             };
 
             //Button "," clicked
             dot.Click += (object sender, EventArgs e) =>
             {
-                if (b.Length == 0)
-                    b = "0,";
-                else if (b.Contains(",") == false)
-                    b = b + ",";
-
-                re();
+                if (tvAd.Text.EndsWith("^2") == false)
+                {
+                    if (b.Length == 0)
+                        b = "0,";
+                    else if (b.Contains(",") == false)
+                        b = b + ",";
+                    re();
+                }
             };
 
             //Button "CE" clicked
@@ -143,6 +189,26 @@ namespace Calc
             minus.Click += (object sender, EventArgs e) => operation("-");
             x.Click += (object sender, EventArgs e) => operation("*");
             slash.Click += (object sender, EventArgs e) => operation("/");
+            square.Click += (object sender, EventArgs e) =>
+            {
+                if (tvAd.Text.Length != 0)
+                {
+                    if (b.Length == 0)
+                    {
+                        oper = oper.Remove(oper.Length - 1);
+                        tvAd.Text = tvAd.Text.Remove(a.Length - 1);
+                        b = number[number.Length - 1].ToString();
+                        Array.Resize<float>(ref number, number.Length - 1);
+                        a = a.Remove(a.Length - b.Length-1);
+                    }
+                    a = a + "(" + b + ")^2";
+                    oper = oper + "s";
+                    tvAd.Text = a;
+                    noper();
+                    //tvAd.Text = tvAd.Text + u;
+                }
+               //  a = tvAd.Text;
+            };
             /*equal.Click += (object sender, EventArgs e) =>
             {
                 swith();
