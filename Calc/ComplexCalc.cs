@@ -32,11 +32,13 @@ namespace Calc
             xEditText = FindViewById<EditText>(Resource.Id.xEditText);
             yEditText = FindViewById<EditText>(Resource.Id.yEditText);
             modZEditText = FindViewById<EditText>(Resource.Id.modZEditText);
-            argZEditText = FindViewById<EditText>(Resource.Id.argZbEditText);
+            argZEditText = FindViewById<EditText>(Resource.Id.argZEditText);
             test = FindViewById<TextView>(Resource.Id.test);
 
             xEditText.KeyPress += onClick;
             yEditText.KeyPress += onClick;
+            modZEditText.KeyPress += onClick;
+            argZEditText.KeyPress += onClick;
         }
         public void onClick(object sender, View.KeyEventArgs e)
         {
@@ -44,20 +46,45 @@ namespace Calc
             {
                 string tmpA = "0";
                 string tmpB = "0";
-                if (xEditText.Text != "")
+                EditText edITTMP = (EditText)sender;
+                
+
+                if (edITTMP.Id == Resource.Id.xEditText ||
+                    edITTMP.Id == Resource.Id.yEditText)
                 {
-                    tmpA = xEditText.Text;
+                    if (xEditText.Text != "")
+                    {
+                        tmpA = xEditText.Text;
+                    }
+                    if (yEditText.Text != "")
+                    {
+                        tmpB = yEditText.Text;
+                    }
+                    x = decimal.Parse(tmpA);
+                    y = decimal.Parse(tmpB);
+                    modZ = (decimal)Math.Sqrt((double)(x * x + y * y));
+                    argZ = (decimal)(Math.Atan2((double)y, (double)x) * (180 / Math.PI));
+                    modZEditText.Text = modZ.ToString();
+                    argZEditText.Text = argZ.ToString();
                 }
-                if (yEditText.Text != "")
+                else if (edITTMP.Id == Resource.Id.modZEditText ||
+                         edITTMP.Id == Resource.Id.argZEditText)
                 {
-                    tmpB = yEditText.Text;
+                    if (modZEditText.Text != "")
+                    {
+                        tmpA = modZEditText.Text;
+                    }
+                    if (argZEditText.Text != "")
+                    {
+                        tmpB = argZEditText.Text;
+                    }
+                    modZ = decimal.Parse(tmpA);
+                    argZ = decimal.Parse(tmpB);
+                    x = modZ * (decimal)Math.Cos((double)argZ * Math.PI / 180);
+                    y = modZ * (decimal)Math.Sin((double)argZ * Math.PI / 180);
+                    xEditText.Text = x.ToString();
+                    yEditText.Text = y.ToString();
                 }
-                x = decimal.Parse(tmpA);
-                y = decimal.Parse(tmpB);
-                modZ = (decimal)Math.Sqrt((double)(x * x + y * y));
-                argZ = (decimal)(Math.Atan2((double)y, (double)x) * (180 / Math.PI));
-                modZEditText.Text = modZ.ToString();
-                argZEditText.Text = argZ.ToString();
             }
             else
             {

@@ -58,7 +58,7 @@
         android:hint="|z|"
         android:imeOptions="actionGo" />
     <EditText
-        android:id="@+id/argZbEditText"
+        android:id="@+id/argZEditText"
         android:layout_below="@id/yEditText"
         android:layout_toRightOf="@id/angle"
         android:layout_alignParentRight="@id/Head"

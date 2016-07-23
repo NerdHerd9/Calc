@@ -67,7 +67,7 @@ namespace Calc
 			public const int angle = 2131034116;
 			
 			// aapt resource value: 0x7f050006
-			public const int argZbEditText = 2131034118;
+			public const int argZEditText = 2131034118;
 			
 			// aapt resource value: 0x7f050005
 			public const int modZEditText = 2131034117;
