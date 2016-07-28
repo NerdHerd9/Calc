@@ -23,14 +23,14 @@ namespace Calc
         //any number is typed
         void num(int u)          
         {
-            if (tvAd.Text.EndsWith("^2") == false)
-            {
+            //if (tvAd.Text.EndsWith("^2") == false)
+            //{
                 if (b.Length < 20)
                 {
                     b = b + u.ToString();
                     re();
                 }
-            }
+            //}
         }
 
         //help func for making new member in NumberArray and cleaning b
@@ -54,11 +54,11 @@ namespace Calc
             {
                 if (b.Length == 0)
                 {
-                    if (tvAd.Text.EndsWith("^2") == false)
-                    {
+                    //if (tvAd.Text.EndsWith("^2") == false)
+                    //{
                         oper = oper.Remove(oper.Length - 1);
                         tvAd.Text = tvAd.Text.Remove(a.Length - 1);
-                    }
+                   // }
                 }
                 else
                     noper();
@@ -160,14 +160,14 @@ namespace Calc
             //Button "," clicked
             dot.Click += (object sender, EventArgs e) =>
             {
-                if (tvAd.Text.EndsWith("^2") == false)
-                {
+                //if (tvAd.Text.EndsWith("^2") == false)
+                //{
                     if (b.Length == 0)
                         b = "0,";
                     else if (b.Contains(",") == false)
                         b = b + ",";
                     re();
-                }
+                //}
             };
 
             //Button "CE" clicked
@@ -189,9 +189,11 @@ namespace Calc
             minus.Click += (object sender, EventArgs e) => operation("-");
             x.Click += (object sender, EventArgs e) => operation("*");
             slash.Click += (object sender, EventArgs e) => operation("/");
-            square.Click += (object sender, EventArgs e) =>
+            square.Click += (object sender, EventArgs e) => 
             {
-                if (tvAd.Text.Length != 0)
+                operation("^");
+
+                /*if (tvAd.Text.Length != 0)
                 {
                     if (b.Length == 0)
                     {
@@ -207,7 +209,7 @@ namespace Calc
                     noper();
                     //tvAd.Text = tvAd.Text + u;
                 }
-               //  a = tvAd.Text;
+               //  a = tvAd.Text;*/
             };
             /*equal.Click += (object sender, EventArgs e) =>
             {
