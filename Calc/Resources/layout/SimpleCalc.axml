@@ -48,7 +48,7 @@
             android:textSize="20dp" />
         <Button
             android:text="^"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/square"
             android:textSize="20dp" />
@@ -204,7 +204,7 @@
             android:textSize="40dp" />
         <Button
             android:text="="
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/equal"
             android:textSize="40dp" />

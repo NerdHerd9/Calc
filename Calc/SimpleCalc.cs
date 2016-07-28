@@ -19,9 +19,10 @@ namespace Calc
         string b;                                       // b - typing new number
         float[] number = new float[0];                  // massive to archive all numbers to operate
         string oper;
+        int count; //number of opened kur(((
 
         //any number is typed
-        void num(int u)          
+        void num(string u)          
         {
             //if (tvAd.Text.EndsWith("^2") == false)
             //{
@@ -40,6 +41,12 @@ namespace Calc
             number[number.Length - 1] = float.Parse(b);
             b = string.Empty;
         }
+
+       // void kur(string u)
+        //{
+        //    b = b + u.ToString();
+        //    re();
+       // }
 
         //any operation button is typed
         void operation(string u)
@@ -80,6 +87,7 @@ namespace Calc
             SetContentView(Resource.Layout.SimpleCalc);
 
             a = b = oper = "";
+            count = 0;
 
             //Adding designers objects to code
             tv = FindViewById<TextView>(Resource.Id.tv);
@@ -109,20 +117,42 @@ namespace Calc
             Button b0 = FindViewById<Button>(Resource.Id.b0);
 
             //connecting actions of clicking to numbers with special func
-            b1.Click += (object sender, EventArgs e) => num(1);
-            b2.Click += (object sender, EventArgs e) => num(2);
-            b3.Click += (object sender, EventArgs e) => num(3);
-            b4.Click += (object sender, EventArgs e) => num(4);
-            b5.Click += (object sender, EventArgs e) => num(5);
-            b6.Click += (object sender, EventArgs e) => num(6);
-            b7.Click += (object sender, EventArgs e) => num(7);
-            b8.Click += (object sender, EventArgs e) => num(8);
-            b9.Click += (object sender, EventArgs e) => num(9);
+            b1.Click += (object sender, EventArgs e) => num("1");
+            b2.Click += (object sender, EventArgs e) => num("2");
+            b3.Click += (object sender, EventArgs e) => num("3");
+            b4.Click += (object sender, EventArgs e) => num("4");
+            b5.Click += (object sender, EventArgs e) => num("5");
+            b6.Click += (object sender, EventArgs e) => num("6");
+            b7.Click += (object sender, EventArgs e) => num("7");
+            b8.Click += (object sender, EventArgs e) => num("8");
+            b9.Click += (object sender, EventArgs e) => num("9");
             b0.Click += (object sender, EventArgs e) =>
             {
-                num(0);   
+                num("0");   
             };
-       
+
+            //kurL.Click += (object sender, EventArgs e) => kur("(");
+            //kurR.Click += (object sender, EventArgs e) => kur(")");
+
+            kurL.Click += (object sender, EventArgs e) =>
+            {
+                if ((b.Length == 0) && (a.EndsWith("(")==false))
+                {
+                    a = a + "(";
+                    re();
+                    count++;
+                }
+            };
+
+            kurR.Click += (object sender, EventArgs e) =>
+            {
+                if ((b.Length != 0) && (count != 0))
+                {
+                    tvAd.Text = tvAd.Text + ")";
+                    count--;
+                }
+            };
+
             //Button "C" clicked
             C.Click += (object sender, EventArgs e) =>
             {
