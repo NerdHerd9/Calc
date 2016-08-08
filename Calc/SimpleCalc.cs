@@ -28,10 +28,22 @@ namespace Calc
             //{
                 if (b.Length < 20)
                 {
-                    b = b + u.ToString();
+                    b = b + u;
+  /*!!!*/           a = a + u;
                     re();
+
                 }
             //}
+        }
+
+        void func(string u)
+        {
+            if (b.Length == 0)
+            {
+                a = a + u;
+                re();
+                count++;
+            }
         }
 
         //help func for making new member in NumberArray and cleaning b
@@ -42,6 +54,21 @@ namespace Calc
             b = string.Empty;
         }
 
+        bool anum()
+        {
+            if ((a.EndsWith("0")) || (a.EndsWith("1")) || (a.EndsWith("2")) || (a.EndsWith("3")) || (a.EndsWith("4")) || (a.EndsWith("5")) || (a.EndsWith("6")) || (a.EndsWith("7")) || (a.EndsWith("8")) || (a.EndsWith("9")))
+                return true;
+            else
+                return false;           
+        }
+
+        bool anumo()
+        {
+            if (anum() == true || a.Length==0 || a.EndsWith("+") || a.EndsWith("-") || a.EndsWith("*") || a.EndsWith("/") || a.EndsWith("^") || a.EndsWith("("))
+                return true;
+            else
+                return false;
+        }
        // void kur(string u)
         //{
         //    b = b + u.ToString();
@@ -51,9 +78,9 @@ namespace Calc
         //any operation button is typed
         void operation(string u)
         {
-            if (tvAd.Text.Length == 0)
+            if (a.Length == 0)
             {
-                tvAd.Text = "0" + u;
+                a = "0" + u;
                 Array.Resize<float>(ref number, number.Length + 1);
                 number[number.Length - 1] = 0;
             }
@@ -64,27 +91,30 @@ namespace Calc
                     //if (tvAd.Text.EndsWith("^2") == false)
                     //{
                         oper = oper.Remove(oper.Length - 1);
-                        tvAd.Text = tvAd.Text.Remove(a.Length - 1);
+                        a = a.Remove(a.Length - 1);
                    // }
                 }
                 else
                     noper();
-                tvAd.Text = tvAd.Text + u;
+                a = a + u;
             }
-            a = tvAd.Text;
+            re();
+            //a = tvAd.Text;
             oper = oper + u;
         }
 
         //recalc value of aditional line
         void re()
         {
-            tvAd.Text = a + b;
+            tvAd.Text = a;
         }
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.SimpleCalc);
+
+            Boolean clats = false;
 
             a = b = oper = "";
             count = 0;
@@ -105,6 +135,7 @@ namespace Calc
             Button kurR = FindViewById<Button>(Resource.Id.kurR);
             Button root = FindViewById<Button>(Resource.Id.root);
             Button square = FindViewById<Button>(Resource.Id.square);
+            Button change = FindViewById<Button>(Resource.Id.change);
             Button b1 = FindViewById<Button>(Resource.Id.b1);
             Button b2 = FindViewById<Button>(Resource.Id.b2);
             Button b3 = FindViewById<Button>(Resource.Id.b3);
@@ -115,6 +146,7 @@ namespace Calc
             Button b8 = FindViewById<Button>(Resource.Id.b8);
             Button b9 = FindViewById<Button>(Resource.Id.b9);
             Button b0 = FindViewById<Button>(Resource.Id.b0);
+
 
             //connecting actions of clicking to numbers with special func
             b1.Click += (object sender, EventArgs e) => num("1");
@@ -131,24 +163,21 @@ namespace Calc
                 num("0");   
             };
 
-            //kurL.Click += (object sender, EventArgs e) => kur("(");
-            //kurR.Click += (object sender, EventArgs e) => kur(")");
+            root.Click += (object sender, EventArgs e) => func("sqrt(");
 
             kurL.Click += (object sender, EventArgs e) =>
             {
-                if ((b.Length == 0) && (a.EndsWith("(")==false))
-                {
-                    a = a + "(";
-                    re();
-                    count++;
-                }
+                if (a.EndsWith("(") == false) 
+                    func("(");
             };
 
             kurR.Click += (object sender, EventArgs e) =>
             {
                 if ((b.Length != 0) && (count != 0))
                 {
-                    tvAd.Text = tvAd.Text + ")";
+                    a = a + ")";
+                    //noper();
+                    re();
                     count--;
                 }
             };
@@ -164,27 +193,47 @@ namespace Calc
             //Button backspace "<-" clicked
             back.Click += (object sender, EventArgs e) =>
             {
-              //  if (tvAd.Text.EndsWith("^2"))
-              //  {
-              //     a = a.Remove(a.Length - b.Length - 4);
-              //      re();
-              //  }
-              //  else
-              //  {
-                    if (b.Length != 0)
+                if (a.Length != 0)
+                {
+                    //исправить говнокод ниже
+                    if (anum() == true)
                     {
+                        if (b.Length == 0)
+                        {
+                            b = number[number.Length - 1].ToString();
+                            Array.Resize<float>(ref number, number.Length - 1);
+
+                            oper = oper.Remove(oper.Length - 1); //разобраться с этой херней.
+                        }
                         b = b.Remove(b.Length - 1);
-                        tvAd.Text = tvAd.Text.Remove(tvAd.Text.Length - 1);
+                        a = a.Remove(a.Length - 1);
+                        // clats = true;               //название переключателя клевое, а зачем он хз... Да, точно клевое. Клатс...
                     }
-                    else if (number.Length != 0)
+                    else
                     {
-                        b = number[number.Length - 1].ToString();
-                        Array.Resize<float>(ref number, number.Length - 1);
-                        a = a.Remove(a.Length - b.Length - 1);
-                        tvAd.Text = tvAd.Text.Remove(tvAd.Text.Length - 1);
-                        oper = oper.Remove(oper.Length - 1);
+                        a = a.Remove(a.Length - 1);
+                        while (anumo() == false)
+                            a = a.Remove(a.Length - 1);
                     }
-               // }
+                    //clats = false;
+                    re();   
+                }
+                
+
+                /* if (b.Length != 0)
+                 {
+                     b = b.Remove(b.Length - 1);
+                     tvAd.Text = tvAd.Text.Remove(tvAd.Text.Length - 1);
+                 }
+                 else if (number.Length != 0)
+                 {
+                     b = number[number.Length - 1].ToString();
+                     Array.Resize<float>(ref number, number.Length - 1);
+                     a = a.Remove(a.Length - b.Length - 1);
+                     tvAd.Text = tvAd.Text.Remove(tvAd.Text.Length - 1);
+                     oper = oper.Remove(oper.Length - 1);
+                 }*/
+
             };
 
             //Button "," clicked
@@ -192,19 +241,23 @@ namespace Calc
             {
                 //if (tvAd.Text.EndsWith("^2") == false)
                 //{
-                    if (b.Length == 0)
-                        b = "0,";
-                    else if (b.Contains(",") == false)
-                        b = b + ",";
-                    re();
+                if (b.Length == 0)
+                { b = "0,"; a = a + b; }
+                else if (b.Contains(",") == false)
+                { b = b + ","; a = a + ","; }
+                re();
                 //}
             };
 
             //Button "CE" clicked
             CE.Click += (object sender, EventArgs e) =>
             {
-                b = string.Empty;
-                re();
+                if (b.Length != 0)
+                {
+                    a = a.Remove(a.Length - b.Length);
+                    b = string.Empty;
+                    re();
+                }
             };
 
             /* n - operation
@@ -241,6 +294,12 @@ namespace Calc
                 }
                //  a = tvAd.Text;*/
             };
+
+            change.Click += (Object sender, EventArgs e) =>
+            {
+                
+            };
+
             /*equal.Click += (object sender, EventArgs e) =>
             {
                 swith();

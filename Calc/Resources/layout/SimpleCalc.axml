@@ -190,12 +190,18 @@
         android:id="@+id/linearLayout6"
         android:layout_marginLeft="5dp">
         <Button
+            android:text="..."
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/change"
+            android:textSize="40dp" />
+        <Button
             android:text="0"
-            android:layout_width="177.5dp"
             android:layout_height="match_parent"
             android:id="@+id/b0"
             android:textSize="40dp"
-            android:height="75dp" />
+            android:height="75dp"
+            android:layout_width="wrap_content" />
         <Button
             android:text=","
             android:layout_width="wrap_content"

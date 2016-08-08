@@ -66,8 +66,8 @@ namespace Calc
 			// aapt resource value: 0x7f050008
 			public const int CE = 2131034120;
 			
-			// aapt resource value: 0x7f05001c
-			public const int b0 = 2131034140;
+			// aapt resource value: 0x7f05001d
+			public const int b0 = 2131034141;
 			
 			// aapt resource value: 0x7f050017
 			public const int b1 = 2131034135;
@@ -99,11 +99,14 @@ namespace Calc
 			// aapt resource value: 0x7f05000a
 			public const int back = 2131034122;
 			
-			// aapt resource value: 0x7f05001d
-			public const int dot = 2131034141;
+			// aapt resource value: 0x7f05001c
+			public const int change = 2131034140;
 			
 			// aapt resource value: 0x7f05001e
-			public const int equal = 2131034142;
+			public const int dot = 2131034142;
+			
+			// aapt resource value: 0x7f05001f
+			public const int equal = 2131034143;
 			
 			// aapt resource value: 0x7f050003
 			public const int kurL = 2131034115;
